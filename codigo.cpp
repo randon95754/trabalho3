@@ -34,6 +34,15 @@ void add(string n, double p, int q) {
     cout << "Produto adicionado!" << endl;
 }
 
+// NOVA FUNCAO - centraliza a regra de desconto
+double aplicar_desconto(double total) {
+    if (total > 100) {
+        total -= total * 0.1;
+    }
+
+    return total;
+}
+
 double vender(string nome, int quantidade) {
     for (int i = 0; i < produtos.size(); i++) {
         if (produtos[i].nome == nome) {
@@ -41,11 +50,7 @@ double vender(string nome, int quantidade) {
                 produtos[i].qtd = produtos[i].qtd - quantidade;
 
                 double total = produtos[i].preco * quantidade;
-
-                // desconto pra compras grandes
-                if (total > 100) {
-                    total = total - total * 0.1;
-                }
+                total = aplicar_desconto(total);
 
                 cout << "Venda realizada. Total: " << total << endl;
                 return total;
@@ -62,13 +67,8 @@ double vender(string nome, int quantidade) {
 
 // calcula o total de uma compra (usado no relatorio)
 double calcular_total(double preco, int quantidade) {
-    double t = preco * quantidade;
-
-    if (t > 200) {              // limite diferente do usado em vender()
-        t = t - t * 0.15;       // desconto diferente do usado em vender()
-    }
-
-    return t;
+    double total = preco * quantidade;
+    return aplicar_desconto(total);
 }
 
 void listar() {
